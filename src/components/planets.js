@@ -1,44 +1,120 @@
-import React, { useState, useEffect } from 'react';
-import Pagination from './Pagination';
-import axios from 'axios';
+import React from 'react';
+import axios from 'axios'
+import Thumbnail from './Thumbnail'
 
-const Planets = () => {
-  const [planets, setPlanets] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [planetsPerPage] = useState(10);
+class Planets extends React.Component {
+	state = {
+		planets: [],
+		planetsTwo: [],
+		planetsThree:[],
+		planetsFour: [],
+		planetsFive: [],
+		planetsSix: [],
+		planetsSeven: []
+	}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      const res = await axios.get('http://localhost:4000/planets');
-			console.log("AAAAAAAA",res.data.next)
-      setPlanets(res.data);
-      setLoading(false);
-    };
+	getAllInfo = () => {
+			console.log("hi")
+	}
 
-    fetchPosts();
-  }, []);
+	componentWillMount() {
 
-  // Get current posts
-  const indexOfLastPost = currentPage * planetsPerPage;
-  const indexOfFirstPost = indexOfLastPost - planetsPerPage;
+		axios.get('http://localhost:4000/planets')
+	  .then(data => {
+			let planets = data.data.results
+			this.setState({planets})
+
+			axios.get(data.data.next)
+			.then(data => {
+				let planetsTwo = data.data.results
+				this.setState({planetsTwo})
+				getAllInfo(this.state.planetsTwo)
+
+				axios.get(data.data.next)
+				.then(data => {
+					let planetsThree = data.data.results
+					this.setState({planetsThree})
+					getAllInfo(this.state.planetsThree)
+
+					axios.get(data.data.next)
+					.then(data => {
+						let planetsFour = data.data.results
+						this.setState({planetsFour})
+						getAllInfo(this.state.planetsFour)
+
+						axios.get(data.data.next)
+						.then(data => {
+							let planetsFive = data.data.results
+							this.setState({planetsFive})
+							getAllInfo(this.state.planetsFive)
+
+							axios.get(data.data.next)
+							.then(data => {
+								let planetsSix = data.data.results
+								this.setState({planetsSix})
+								getAllInfo(this.state.planetsSix)
+
+								axios.get(data.data.next)
+								.then(data => {
+									let planetsSeven = data.data.results
+									this.setState({planetsSeven})
+									getAllInfo(this.state.planetsSeven)
+
+								})
+							})
+						})
+					})
+				})
+			})
 
 
-  // Change page
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+			let getAllInfo = (arr) => {
 
-  return (
-    <div className='container mt-5'>
-      <h1 className='text-primary mb-3'>My Blog</h1>
+				arr.map((planet,i) => {
+					planet.residents.map((resident,i) => {
+						axios.get(resident)
+						.then(data => {
+							planet.residents[i] = data.data.name
+							this.setState({arr})
+						}).catch(err => {
+							console.log(err)
+						})
+					})
+					planet.films.map((film,i) => {
+						axios.get(film)
+						.then(data => {
+							planet.films[i] = data.data.title
+							this.setState({arr})
+						})
+					})
 
-      <Pagination
-        postsPerPage={planetsPerPage}
-        totalPlanets={planets.length}
-        paginate={paginate}
-      />
-    </div>
-  );
-};
+				})
+			}
+
+				getAllInfo(this.state.planets)
+
+	  })
+	}
+
+
+
+
+		getHomeworld = (arr) => {
+
+			console.log(this.state)
+		}
+
+	render() {
+		return (
+			<div>
+				<button onClick={()=>this.getHomeworld(this.state.peopleTwo)}>Get People</button>
+				<div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-around"}}>
+
+				</div>
+
+			</div>
+		);
+	}
+}
 
 export default Planets;

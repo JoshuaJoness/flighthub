@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios'
-import Thumbnail from './components/thumbnail'
-import Planets from './components/planets'
+import Thumbnail from './components/Thumbnail'
+import Planets from './components/Planets'
+import Starships from './components/Starships'
 
 class Home extends React.Component {
 	state = {
@@ -147,8 +148,8 @@ class Home extends React.Component {
 
 
 		getHomeworld = (arr) => {
-			console.log(this.state)
-			arr.map(person => {console.log("hi")})
+			let kk = this.state.people.concat(this.state.peopleTwo).concat(this.state.peopleThree).concat(this.state.peopleFour).concat(this.state.peopleFive).concat(this.state.peopleSix).concat(this.state.peopleSeven).concat(this.state.peopleEight).concat(this.state.peopleNine)
+			console.log(kk)
 		}
 
 	render() {
@@ -163,25 +164,13 @@ class Home extends React.Component {
 						this.state.peopleTwo.map((person,i) => <Thumbnail key={i} person={person}></Thumbnail>)
 					}
 				</div>
+
 				<Planets />
+				<Starships />
+
 			</div>
 		);
 	}
 }
-// height: "172"
-// mass: "77"
-// hair_color: "blond"
-// skin_color: "fair"
-// eye_color: "blue"
-// birth_year: "19BBY"
-// gender: "male"
-// homeworld: "https://swapi.co/api/planets/1/"
-// films: (5) ["https://swapi.co/api/films/2/", "https://swapi.co/api/films/6/", "https://swapi.co/api/films/3/", "https://swapi.co/api/films/1/", "https://swapi.co/api/films/7/"]
-// species: ["https://swapi.co/api/species/1/"]
-// vehicles: (2) ["https://swapi.co/api/vehicles/14/", "https://swapi.co/api/vehicles/30/"]
-// starships: (2) ["https://swapi.co/api/starships/12/", "https://swapi.co/api/starships/22/"]
-// created: "2014-12-09T13:50:51.644000Z"
-// edited: "2014-12-20T21:17:56.891000Z"
-// url:
 
 export default Home;
