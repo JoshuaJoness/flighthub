@@ -6,7 +6,11 @@ import Planets from './components/planets'
 class Home extends React.Component {
 	state = {
 		people: [],
-		fs: []
+		peopleTwo: []
+	}
+
+	getAllInfo = () => {
+			console.log("hi")
 	}
 
 	componentWillMount() {
@@ -14,26 +18,32 @@ class Home extends React.Component {
 		axios.get('http://localhost:4000/people')
 	  .then(data => {
 			// this console log is to test and ensure that I am receiving the correct data
-			console.log('sssssss',data.data.next)
 			let people = data.data.results
 			this.setState({people})
-			// this retrieves each person's homeworld
-			this.state.people.map(person =>
-				axios.get(person.homeworld)
-				.then(data => {
-					person.homeworld = data.data.name
-					this.setState({people})
-				})
-				.catch(err => {
-					console.log(err)
-				}))
-				// this retrieves all of the films that the person has been in
-				this.state.people.map(person => {
+			axios.get(data.data.next)
+			.then(data => {
+				let peopleTwo = data.data.results
+				this.setState({peopleTwo})
+				getAllInfo(this.state.peopleTwo)
+			}).catch(err => {
+				console.log(err)
+			})
+
+			let getAllInfo = (arr) => {
+				arr.map(person => {
+					axios.get(person.homeworld)
+					.then(data => {
+						person.homeworld = data.data.name
+						this.setState({arr})
+					})
+					.catch(err => {
+						console.log(err)
+					})
 					person.films.map((film,i) => {
 						axios.get(film)
 						.then(data => {
 							person.films[i] = data.data.title
-							this.setState({people})
+							this.setState({arr})
 						}).catch(err => {
 							console.log(err)
 						})
@@ -41,16 +51,15 @@ class Home extends React.Component {
 					axios.get(person.species)
 					.then(data => {
 						person.species = data.data.name
-						this.setState({people})
+						this.setState({arr})
 					}).catch(err => {
 						console.log(err)
 					})
 					person.vehicles.map((vehicle,i) => {
 						axios.get(vehicle)
 						.then(data => {
-							console.log("ddddddddd",data.data.name)
 							person.vehicles[i] = data.data.name
-							this.setState({people})
+							this.setState({arr})
 						}).catch(err => {
 							console.log(err)
 						})
@@ -58,34 +67,48 @@ class Home extends React.Component {
 					person.starships.map((starship,i) => {
 						axios.get(starship)
 						.then(data => {
-							console.log(data.data);
 							person.starships[i] = data.data.name
-							this.setState({people})
+							this.setState({arr})
 						}).catch(err => {
 							console.log(err);
 						})
 					})
 				})
+				}
+
+				getAllInfo(this.state.people)
+
+				getAllInfo(this.state.peopleTwo)
+
+
+
+		// this retrieves all of the infromation in then nested arrays
+
+
 
 	  })}
 
 
 
 
-		getHomeworld = () => {
+		getHomeworld = (arr) => {
 			console.log(this.state)
+			arr.map(person => {console.log("hi")})
 		}
 
 	render() {
 		return (
 			<div>
-				<button onClick={this.getHomeworld}>Get People</button>
+				<button onClick={()=>this.getHomeworld(this.state.peopleTwo)}>Get People</button>
 				<div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-around"}}>
 					{
 						this.state.people.map((person,i) => <Thumbnail key={i} person={person}></Thumbnail>)
 					}
-					<Planets />
+					{
+						this.state.peopleTwo.map((person,i) => <Thumbnail key={i} person={person}></Thumbnail>)
+					}
 				</div>
+				<Planets />
 			</div>
 		);
 	}
