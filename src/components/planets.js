@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
-import Thumbnail from './Thumbnail'
+import PlanetThumbnail from './PlanetThumbnail'
+import { Card, Accordion, AccordionSection, Input, Modal } from 'react-rainbow-components';
 
 class Planets extends React.Component {
 	state = {
@@ -10,13 +11,10 @@ class Planets extends React.Component {
 		planetsFour: [],
 		planetsFive: [],
 		planetsSix: [],
-		planetsSeven: []
+		planetsSeven: [],
+		planetsTotal: []
 	}
-
-	getAllInfo = () => {
-			console.log("hi")
-	}
-
+	
 	componentWillMount() {
 
 		axios.get('http://localhost:4000/planets')
@@ -60,6 +58,9 @@ class Planets extends React.Component {
 									this.setState({planetsSeven})
 									getAllInfo(this.state.planetsSeven)
 
+									let planetsTotal = this.state.planets.concat(this.state.planetsTwo).concat(this.state.planetsThree).concat(this.state.planetsFour).concat(this.state.planetsFive).concat(this.state.planetsSix).concat(this.state.planetsSeven)
+									this.setState({planetsTotal})
+
 								})
 							})
 						})
@@ -96,22 +97,31 @@ class Planets extends React.Component {
 	  })
 	}
 
-
-
-
-		getHomeworld = (arr) => {
-
-			console.log(this.state)
-		}
-
 	render() {
 		return (
 			<div>
-				<button onClick={()=>this.getHomeworld(this.state.peopleTwo)}>Get People</button>
-				<div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-around"}}>
-
-				</div>
-
+				<center id="planets">
+					<Card style={{width: "85%", marginTop:"5%"}}>
+						{
+							this.state.planetsTotal.length == 61 ?
+							<Accordion><center><b style={{fontSize:"30px"}}>Click arrow to show/hide planets</b></center>
+								<AccordionSection>
+									<div style={{display:"flex", flexWrap:"wrap", marginRight:"3%"}}>
+										{
+											this.state.planetsTotal.map((planet,i) => <PlanetThumbnail planet={planet} key={i}> </PlanetThumbnail>)
+										}
+									</div>
+								</AccordionSection>
+							</Accordion>
+							:
+							<Accordion><center><b style={{fontSize:"30px"}}>Click arrow to show/hide planets</b></center>
+								<AccordionSection>
+									<i class="fas fa-spinner fa-pulse"></i> Sorry still loading...
+								</AccordionSection>
+							</Accordion>
+						}
+					</Card>
+				</center>
 			</div>
 		);
 	}

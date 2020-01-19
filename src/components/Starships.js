@@ -1,13 +1,15 @@
 import React from 'react';
 import axios from 'axios'
-import Thumbnail from './Thumbnail'
+import StarshipThumbnail from './StarshipThumbnail'
+import { Card, Accordion, AccordionSection, Input, Modal } from 'react-rainbow-components';
 
 class Starships extends React.Component {
 	state = {
 		starships: [],
 		starshipsTwo: [],
 		starshipsThree:[],
-		starshipsFour: []
+		starshipsFour: [],
+		starshipsTotal: []
 	}
 
 	componentWillMount() {
@@ -34,6 +36,9 @@ class Starships extends React.Component {
 						let starshipsFour = data.data.results
 						this.setState({starshipsFour})
 						getAllInfo(this.state.starshipsFour)
+
+						let starshipsTotal = this.state.starships.concat(this.state.starshipsTwo).concat(this.state.starshipsThree).concat(this.state.starshipsFour)
+						this.setState({starshipsTotal})
 
 					})
 				})
@@ -79,11 +84,28 @@ class Starships extends React.Component {
 	render() {
 		return (
 			<div>
-				<button onClick={()=>this.getHomeworld(this.state.peopleTwo)}>Get People</button>
-				<div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-around"}}>
-
-				</div>
-
+				<center id="starships">
+					<Card style={{width: "85%", marginTop:"5%"}}>
+						{
+							this.state.starshipsTotal.length == 37 ?
+							<Accordion><center><b style={{fontSize:"30px"}}>Click arrow to show/hide starships</b></center>
+								<AccordionSection>
+									<div style={{display:"flex", flexWrap:"wrap", marginRight:"3%"}}>
+										{
+											this.state.starshipsTotal.map((starship,i) => <StarshipThumbnail starship={starship} key={i}> </StarshipThumbnail>)
+										}
+									</div>
+								</AccordionSection>
+							</Accordion>
+							:
+							<Accordion><center><b style={{fontSize:"30px"}}>Click arrow to show/hide starships</b></center>
+								<AccordionSection>
+									<i class="fas fa-spinner fa-pulse"></i> Sorry still loading...
+								</AccordionSection>
+							</Accordion>
+						}
+					</Card>
+				</center>
 			</div>
 		);
 	}
