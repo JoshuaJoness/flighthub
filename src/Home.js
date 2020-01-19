@@ -5,8 +5,16 @@ import Planets from './components/planets'
 
 class Home extends React.Component {
 	state = {
+		url: "",
 		people: [],
-		peopleTwo: []
+		peopleTwo: [],
+		peopleThree:[],
+		peopleFour: [],
+		peopleFive: [],
+		peopleSix: [],
+		peopleSeven: [],
+		peopleEight: [],
+		peopleNine: []
 	}
 
 	getAllInfo = () => {
@@ -14,22 +22,72 @@ class Home extends React.Component {
 	}
 
 	componentWillMount() {
-		// this is the initial request to retrieve all of the people from the API
+
 		axios.get('http://localhost:4000/people')
 	  .then(data => {
-			// this console log is to test and ensure that I am receiving the correct data
 			let people = data.data.results
 			this.setState({people})
+
 			axios.get(data.data.next)
 			.then(data => {
 				let peopleTwo = data.data.results
 				this.setState({peopleTwo})
 				getAllInfo(this.state.peopleTwo)
-			}).catch(err => {
-				console.log(err)
+
+				axios.get(data.data.next)
+				.then(data => {
+					let peopleThree = data.data.results
+					this.setState({peopleThree})
+					getAllInfo(this.state.peopleThree)
+
+					axios.get(data.data.next)
+					.then(data => {
+						let peopleFour = data.data.results
+						this.setState({peopleFour})
+						getAllInfo(this.state.peopleFour)
+
+						axios.get(data.data.next)
+						.then(data => {
+							let peopleFive = data.data.results
+							this.setState({peopleFive})
+							getAllInfo(this.state.peopleFive)
+
+							axios.get(data.data.next)
+							.then(data => {
+								let peopleSix = data.data.results
+								this.setState({peopleSix})
+								getAllInfo(this.state.peopleSix)
+
+								axios.get(data.data.next)
+								.then(data => {
+									let peopleSeven = data.data.results
+									this.setState({peopleSeven})
+									getAllInfo(this.state.peopleSeven)
+
+									axios.get(data.data.next)
+									.then(data => {
+										let peopleEight = data.data.results
+										this.setState({peopleEight})
+										getAllInfo(this.state.peopleEight)
+
+										axios.get(data.data.next)
+										.then(data => {
+											let peopleNine = data.data.results
+											this.setState({peopleNine})
+											getAllInfo(this.state.peopleNine)
+
+										})
+									})
+								})
+							})
+						})
+					})
+				})
 			})
 
+
 			let getAllInfo = (arr) => {
+
 				arr.map(person => {
 					axios.get(person.homeworld)
 					.then(data => {
@@ -39,6 +97,7 @@ class Home extends React.Component {
 					.catch(err => {
 						console.log(err)
 					})
+
 					person.films.map((film,i) => {
 						axios.get(film)
 						.then(data => {
@@ -48,6 +107,7 @@ class Home extends React.Component {
 							console.log(err)
 						})
 					})
+
 					axios.get(person.species)
 					.then(data => {
 						person.species = data.data.name
@@ -55,6 +115,7 @@ class Home extends React.Component {
 					}).catch(err => {
 						console.log(err)
 					})
+
 					person.vehicles.map((vehicle,i) => {
 						axios.get(vehicle)
 						.then(data => {
@@ -64,6 +125,7 @@ class Home extends React.Component {
 							console.log(err)
 						})
 					})
+
 					person.starships.map((starship,i) => {
 						axios.get(starship)
 						.then(data => {
@@ -74,19 +136,12 @@ class Home extends React.Component {
 						})
 					})
 				})
-				}
+			}
 
 				getAllInfo(this.state.people)
 
-				getAllInfo(this.state.peopleTwo)
-
-
-
-		// this retrieves all of the infromation in then nested arrays
-
-
-
-	  })}
+	  })
+	}
 
 
 
