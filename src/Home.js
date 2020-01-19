@@ -3,10 +3,11 @@ import axios from 'axios'
 import Thumbnail from './components/Thumbnail'
 import Planets from './components/Planets'
 import Starships from './components/Starships'
+import SearchForPerson from './components/SearchForPerson'
 
 class Home extends React.Component {
 	state = {
-		url: "",
+		search: "",
 		people: [],
 		peopleTwo: [],
 		peopleThree:[],
@@ -15,7 +16,8 @@ class Home extends React.Component {
 		peopleSix: [],
 		peopleSeven: [],
 		peopleEight: [],
-		peopleNine: []
+		peopleNine: [],
+		peopleTotal: []
 	}
 
 	getAllInfo = () => {
@@ -76,6 +78,9 @@ class Home extends React.Component {
 											let peopleNine = data.data.results
 											this.setState({peopleNine})
 											getAllInfo(this.state.peopleNine)
+
+											let peopleTotal = this.state.people.concat(this.state.peopleTwo).concat(this.state.peopleThree).concat(this.state.peopleFour).concat(this.state.peopleFive).concat(this.state.peopleSix).concat(this.state.peopleSeven).concat(this.state.peopleEight).concat(this.state.peopleNine)
+											this.setState({peopleTotal})
 
 										})
 									})
@@ -141,32 +146,62 @@ class Home extends React.Component {
 
 				getAllInfo(this.state.people)
 
+
 	  })
 	}
 
 
+	filterByName = (event) => {
+		let filteredPeople
+
+		if (event.target.value === '1') {
+				console.log(event.target.value);
+			filteredPeople = this.state.peopleTotal
+		} else {
+			filteredPeople = this.state.peopleTotal.filter(person => person.name === event.target.value )
+		}
+		this.setState({filteredPeople: filteredPeople})
+	}
 
 
-		getHomeworld = (arr) => {
-			let kk = this.state.people.concat(this.state.peopleTwo).concat(this.state.peopleThree).concat(this.state.peopleFour).concat(this.state.peopleFive).concat(this.state.peopleSix).concat(this.state.peopleSeven).concat(this.state.peopleEight).concat(this.state.peopleNine)
-			console.log(kk)
+		searchPersonByName = (e) => {
+			if (this.state.peopleTotal.length == 87) {
+				let id = 0
+				let filteredPerson = this.state.peopleTotal.filter(person => person.name.includes(e.target.value) || person.name.toLowerCase().includes(e.target.value))
+				console.log(filteredPerson[0].name)
+
+				this.state.peopleTotal.forEach((person,i) => {
+					if (filteredPerson[0].name == person.name) {
+						id = i + 1
+						return id
+					}
+				})
+				console.log(id)
+
+				axios.get(`http://localhost:4000/person/${id}`)
+					.then(data => {
+						console.log(data.data.name)
+						let name = data.data.name
+						let filteredPerson = this.state.peopleTotal.filter(person => person.name == name)
+						this.setState({filteredPerson})
+					})
+			}
+			else {
+				alert("Please wait, still loading data")
+			}
+		}
+
+		showState = () => {
+			console.log(this.state.filteredPerson)
 		}
 
 	render() {
 		return (
 			<div>
-				<button onClick={()=>this.getHomeworld(this.state.peopleTwo)}>Get People</button>
-				<div style={{display:"flex", flexWrap:"wrap", justifyContent:"space-around"}}>
-					{
-						this.state.people.map((person,i) => <Thumbnail key={i} person={person}></Thumbnail>)
-					}
-					{
-						this.state.peopleTwo.map((person,i) => <Thumbnail key={i} person={person}></Thumbnail>)
-					}
-				</div>
 
-				<Planets />
-				<Starships />
+				<input onInput={this.searchPersonByName} ></input>
+
+				<button onClick={this.showState}>Console Log State</button>
 
 			</div>
 		);
