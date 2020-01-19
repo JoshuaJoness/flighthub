@@ -5,6 +5,7 @@ import Planets from './components/Planets'
 import Starships from './components/Starships'
 import Particles from 'react-particles-js';
 import Nav from './components/Nav'
+import './styles/global.css'
 
 class Home extends React.Component {
 
@@ -28,7 +29,6 @@ class Home extends React.Component {
 					<Nav />
 					<center>
 						<img src="star-wars-logo.png" alt="Star Wars Logo" style={{width:"35%", paddingTop:"15%"}}></img>
-						<p>Designed by <a href="http://joshuajones.io">http://joshuajones.io</a></p>
 					</center>
 					<Particles
 							style={styles.particles}
@@ -88,6 +88,9 @@ class Home extends React.Component {
 					<People />
 					<Planets />
 					<Starships />
+					<center>
+						<p>Designed by <a className="link" target="blank" href="http://joshuajones.io">http://joshuajones.io</a></p>
+					</center>
 				</div>
 			</div>
 		);
