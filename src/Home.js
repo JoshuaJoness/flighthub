@@ -88,7 +88,7 @@ class Home extends React.Component {
 					<People />
 					<Planets />
 					<Starships />
-					<center>
+					<center style={{paddingTop:"4%"}}>
 						<p>Designed by <a className="link" target="blank" href="http://joshuajones.io">http://joshuajones.io</a></p>
 					</center>
 				</div>
