@@ -14,7 +14,7 @@ class Starships extends React.Component {
 
 	componentWillMount() {
 
-		axios.get('http://localhost:4000/starships')
+		axios.get(`${process.env.REACT_APP_API}/starships`)
 	  .then(data => {
 			let starships = data.data.results
 			this.setState({starships})

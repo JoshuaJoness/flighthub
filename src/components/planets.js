@@ -14,10 +14,10 @@ class Planets extends React.Component {
 		planetsSeven: [],
 		planetsTotal: []
 	}
-	
+
 	componentWillMount() {
 
-		axios.get('http://localhost:4000/planets')
+		axios.get(`${process.env.REACT_APP_API}/planets`)
 	  .then(data => {
 			let planets = data.data.results
 			this.setState({planets})

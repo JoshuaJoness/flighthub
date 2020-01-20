@@ -21,7 +21,7 @@ class People extends React.Component {
 
 	componentWillMount() {
 
-		axios.get('http://localhost:4000/people')
+		axios.get(`${process.env.REACT_APP_API}/people`)
 	  .then(data => {
 			let people = data.data.results
 			this.setState({people})
