@@ -8,10 +8,7 @@ import Nav from './components/Nav'
 import './styles/global.css'
 
 class Home extends React.Component {
-
-
 	render() {
-
 		const styles = {
 			particles:{
 						position: "absolute",
@@ -24,7 +21,6 @@ class Home extends React.Component {
 
 		return (
 			<div>
-
 				<div style={{height: "100vh", backgroundColor:"black"}}>
 					<Nav />
 					<center>
@@ -85,9 +81,9 @@ class Home extends React.Component {
 						}} />
 				</div>
 				<div style={{height:"100vh", backgroundColor:"#ffffff"}}>
-					<People />
-					<Planets />
 					<Starships />
+					<Planets />
+					<People />
 					<center style={{paddingTop:"4%"}}>
 						<p>Designed by <a className="link" target="blank" href="http://joshuajones.io">http://joshuajones.io</a></p>
 					</center>
