@@ -5,12 +5,12 @@ class StarshipThumbnail extends React.Component {
 	render () {
 		return (
 			<>
-				<div>
-					<Card style={{width:"300px", margin:"4%"}}>
+				<div style={{display:"flex", flexWrap:"wrap"}}>
+					<Card style={{width:"450px", margin:"4%"}}>
 						<Accordion> <b style={{marginRight:"3%"}}>{this.props.starship.name}</b>
 							<AccordionSection>
-							<div style={{display:"grid", gridTemplateColumns:"50% 50%", height:"600px"}}>
-								<div style={{display:"grid", gridTemplateRows:"10% 10% 15% 10% 10% 10% 10% 10% 10%", padding:"3%"}}>
+							<div style={{display:"grid", gridTemplateColumns:"50% 50%", height:"800px"}}>
+								<div style={{display:"grid", gridTemplateRows:"10% 20% 10% 10% 10% 10% 10% 10% 10%", padding:"3%"}}>
 									<label><b>Model: </b>{this.props.starship.model}</label>
 									<label><b>Manufacturer: </b>{this.props.starship.manufacturer}</label>
 									<label><b>Cost in Credits: </b>{this.props.starship.cost_in_credits}</label>

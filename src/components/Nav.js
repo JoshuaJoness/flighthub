@@ -8,8 +8,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-
-
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -29,11 +27,10 @@ export default function Nav() {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ ...state, [side]: open });
   };
 
-  return (
+  return(
     <div>
       <Button onClick={toggleDrawer('right', true)}><i class="fas fa-bars" style={{color:"#E2B200", fontSize:"40px", padding:"2.5%", zIndex:"10"}}></i></Button>
       <Drawer anchor="right" open={state.right} onClose={toggleDrawer('right', false)} >

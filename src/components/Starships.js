@@ -13,7 +13,6 @@ class Starships extends React.Component {
 	}
 
 	componentWillMount() {
-
 		axios.get(`${process.env.REACT_APP_API}/starships`)
 	  .then(data => {
 			let starships = data.data.results
@@ -44,9 +43,7 @@ class Starships extends React.Component {
 				})
 			})
 
-
 			let getAllInfo = (arr) => {
-
 				arr.map((starship,i) => {
 					starship.pilots.map((pilot,i) => {
 						axios.get(pilot)
@@ -67,19 +64,9 @@ class Starships extends React.Component {
 
 				})
 			}
-
-				getAllInfo(this.state.starships)
-
+			getAllInfo(this.state.starships)
 	  })
 	}
-
-
-
-
-		getHomeworld = (arr) => {
-
-			console.log(this.state)
-		}
 
 	render() {
 		return (

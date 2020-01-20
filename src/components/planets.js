@@ -16,7 +16,6 @@ class Planets extends React.Component {
 	}
 
 	componentWillMount() {
-
 		axios.get(`${process.env.REACT_APP_API}/planets`)
 	  .then(data => {
 			let planets = data.data.results
@@ -68,9 +67,7 @@ class Planets extends React.Component {
 				})
 			})
 
-
 			let getAllInfo = (arr) => {
-
 				arr.map((planet,i) => {
 					planet.residents.map((resident,i) => {
 						axios.get(resident)
@@ -91,9 +88,7 @@ class Planets extends React.Component {
 
 				})
 			}
-
-				getAllInfo(this.state.planets)
-
+			getAllInfo(this.state.planets)
 	  })
 	}
 

@@ -2,11 +2,11 @@ import React from 'react'
 import { Card, Accordion, AccordionSection } from 'react-rainbow-components';
 
 class PeopleThumbnail extends React.Component {
-	render () {
+	render() {
 		return (
 			<>
-				<div>
-					<Card style={{width:"300px", margin:"4%"}}>
+				<div style={{display:"flex", flexWrap:"wrap"}}>
+					<Card style={{width:"450px", margin:"4%"}}>
 						<Accordion> <b style={{marginRight:"3%"}}>{this.props.person.name}</b>
 							<AccordionSection>
 							<div style={{display:"grid", gridTemplateColumns:"50% 50%", height:"600px"}}>

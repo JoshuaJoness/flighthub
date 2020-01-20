@@ -80,11 +80,11 @@ class Home extends React.Component {
 						    }
 						}} />
 				</div>
-				<div style={{height:"100vh", backgroundColor:"#ffffff"}}>
+				<div style={{height:"150vh", backgroundColor:"#ffffff"}}>
 					<Starships />
 					<Planets />
 					<People />
-					<center style={{paddingTop:"4%"}}>
+					<center style={{marginTop:"7%", marginBottom:"10%"}}>
 						<p>Designed by <a className="link" target="blank" href="http://joshuajones.io">http://joshuajones.io</a></p>
 					</center>
 				</div>

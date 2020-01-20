@@ -5,8 +5,8 @@ class PlanetThumbnail extends React.Component {
 	render () {
 		return (
 			<>
-				<div>
-					<Card style={{width:"300px", margin:"4%"}}>
+				<div style={{display:"flex", flexWrap:"wrap"}}>
+					<Card style={{width:"450px", margin:"4%"}}>
 						<Accordion> <b style={{marginRight:"3%"}}>{this.props.planet.name}</b>
 							<AccordionSection>
 							<div style={{display:"grid", gridTemplateColumns:"50% 50%", height:"600px"}}>

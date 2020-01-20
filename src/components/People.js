@@ -18,9 +18,8 @@ class People extends React.Component {
 		peopleNine: [],
 		peopleTotal: []
 	}
-
+// multiple requests in this manner so that I could populate the nested arrays
 	componentWillMount() {
-
 		axios.get(`${process.env.REACT_APP_API}/people`)
 	  .then(data => {
 			let people = data.data.results
@@ -76,7 +75,6 @@ class People extends React.Component {
 
 											let peopleTotal = this.state.people.concat(this.state.peopleTwo).concat(this.state.peopleThree).concat(this.state.peopleFour).concat(this.state.peopleFive).concat(this.state.peopleSix).concat(this.state.peopleSeven).concat(this.state.peopleEight).concat(this.state.peopleNine)
 											this.setState({peopleTotal})
-
 										})
 									})
 								})
@@ -86,9 +84,7 @@ class People extends React.Component {
 				})
 			})
 
-
 			let getAllInfo = (arr) => {
-
 				arr.map(person => {
 					axios.get(person.homeworld)
 					.then(data => {
@@ -138,8 +134,7 @@ class People extends React.Component {
 					})
 				})
 			}
-
-				getAllInfo(this.state.people)
+			getAllInfo(this.state.people)
 	  })
 	}
 
@@ -170,60 +165,10 @@ class People extends React.Component {
 		}
 
 	render() {
-		var settings = {
-			dots: true,
-			infinite: true,
-			arrows: true,
-			speed: 500,
-			slidesToShow: 1,
-			slidesToScroll: 1
-		};
 		return (
 			<>
-				<center id="people" style={{paddingTop:"5%"}}>
-					<b style={{fontSize:"30px"}}>Search for people below:</b>
-					<Input id="search" onChange={this.searchPersonByName} placeholder="Enter a name to search for a person" style={{width: "85%", marginTop:"5%"}}/>
-
-					{
-						this.state.filteredPerson ?
-							this.state.filteredPerson.map(person => <Card style={{width:"300px", marginTop:"5%"}}>
-								<Accordion> <b style={{padding:"3%"}}>{person.name}</b>
-									<AccordionSection>
-									<div style={{display:"grid", gridTemplateRows:"15% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 25% 12.5% 12.5% 12.5%", padding:"10%", marginRight:"3%", height:"800px"}}>
-										<label>Height: {person.height}</label>
-										<label>Mass: {person.mass}</label>
-										<label>Hair Colour: {person.hair_color}</label>
-										<label>Skin Colour: {person.skin_color}</label>
-										<label>Eye Colour: {person.eye_color}</label>
-										<label>Birth Year: {person.birth_year}</label>
-										<label>Gender: {person.gender}</label>
-										<label>Homeworld: {person.homeworld}</label>
-										<label>Films:
-											{
-												person.films.map(film => ` ${film}, `)
-											}
-										</label>
-										<label>Species: {person.species}</label>
-										<label>Vehicles:
-											{
-												person.vehicles.length ? person.vehicles.map(vehicle => ` ${vehicle}, `) : " n/a"
-											}
-										</label>
-										<label>Starships:
-											{
-												person.starships.length ? person.starships.map(starship => ` ${starship}, `) : " n/a"
-											}
-										</label>
-									</div>
-									</AccordionSection>
-								</Accordion>
-							</Card>)
-
-						:
-
-						<i class="fas fa-search"></i>
-					}
-					<Card style={{width: "85%", marginTop:"5%"}}>
+				<center id="people">
+					<Card style={{width: "85%", marginTop:"5%", marginBottom:"5%"}}>
 						{
 							this.state.peopleTotal.length == 87 ?
 							<Accordion><center><b style={{fontSize:"30px"}}>Click arrow to show/hide people</b></center>
@@ -243,6 +188,50 @@ class People extends React.Component {
 							</Accordion>
 						}
 					</Card>
+
+					<b style={{fontSize:"30px", marginTop:"5%"}}>Search for people below:</b>
+					<Input id="search" onChange={this.searchPersonByName} placeholder="Enter a name to search for a person" style={{width: "85%", marginTop:"5%"}}/>
+					{
+						this.state.filteredPerson ?
+							this.state.filteredPerson.map(person => <Card style={{width:"450px", marginTop:"5%"}}>
+								<Accordion> <b style={{padding:"3%"}}>{person.name}</b>
+									<AccordionSection>
+									<div style={{display:"grid", gridTemplateColumns:"50% 50%"}}>
+									<div style={{display:"grid", gridTemplateRows:"15% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%", padding:"10%", marginRight:"3%", height:"800px"}}>
+										<label>Height: {person.height}</label>
+										<label>Mass: {person.mass}</label>
+										<label>Hair Colour: {person.hair_color}</label>
+										<label>Skin Colour: {person.skin_color}</label>
+										<label>Eye Colour: {person.eye_color}</label>
+										<label>Birth Year: {person.birth_year}</label>
+										<label>Gender: {person.gender}</label>
+										<label>Homeworld: {person.homeworld}</label>
+									</div>
+									<div style={{display:"grid", gridTemplateRows:"15% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%", padding:"10%", marginRight:"3%", height:"800px"}}>
+										<label>Films:
+											{
+												person.films.map(film => ` ${film}, `)
+											}
+										</label>
+										<label>Species: {person.species}</label>
+										<label>Vehicles:
+											{
+												person.vehicles.length ? person.vehicles.map(vehicle => ` ${vehicle}, `) : " n/a"
+											}
+										</label>
+										<label>Starships:
+											{
+												person.starships.length ? person.starships.map(starship => ` ${starship}, `) : " n/a"
+											}
+										</label>
+									</div>
+									</div>
+									</AccordionSection>
+								</Accordion>
+							</Card>)
+						:
+						<i style={{marginTop:"5%"}} class="fas fa-search"></i>
+					}
 				</center>
 			</>
 		);
